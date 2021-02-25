@@ -35,24 +35,24 @@ module timer(
 
         // cover the counter getting loaded and starting to count
         if (!reset)
-          cover(busy);
+          _busy_ : cover(busy);
 
         // cover timer finishing
         if (f_past_valid && !$past(reset))
-          cover($past(busy) && !busy);
+          _finishing_ : cover($past(busy) && !busy);
 
         // busy
         if (counter)
-          assert(busy);
+          _busy_works_ : assert(busy);
 
 
         // load works
         if (f_past_valid && !$past(reset) && $past(load))
-          assert(counter == $past(cycles));
+          _load_works_ : assert(counter == $past(cycles));
 
         // counts down
         if (f_past_valid && !$past(reset) && !$past(load) && $past(busy))
-          assert(counter == $past(counter) - 1);
+          _counting_works_ : assert(counter == $past(counter) - 1);
 
     end
     `endif

@@ -42,6 +42,9 @@ module timer(
           cover(counter == 0);
 
         // busy
+        if (f_past_valid && !$past(reset) && $past(load))
+          cover(counter == $past(cycles));
+
 
         // load works
 

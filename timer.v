@@ -38,6 +38,8 @@ module timer(
           cover(busy);
 
         // cover timer finishing
+        if (f_past_valid && !$past(reset) && $past(counter) != 0)
+          cover(counter == 0);
 
         // busy
 

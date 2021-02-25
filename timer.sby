@@ -1,5 +1,5 @@
 [options]
-mode cover
+mode bmc
 
 [engines]
 smtbmc

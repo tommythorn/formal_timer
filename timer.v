@@ -10,7 +10,7 @@ module timer(
     reg [15:0] counter;
 
     always @(posedge clk) begin
-        if(reset)
+        if (reset)
             counter <= 0;
         else if (load)
             counter <= cycles;
@@ -26,7 +26,7 @@ module timer(
     // start in reset
     initial assume(reset);
     always @(posedge clk) begin
-        
+
         // assume timer won't get loaded with a 0
         assume(cycles > 0);
 
@@ -34,6 +34,8 @@ module timer(
         f_past_valid <= 1;
 
         // cover the counter getting loaded and starting to count
+        if (f_past_valid && !$past(reset))
+          cover(busy);
 
         // cover timer finishing
 
@@ -44,5 +46,5 @@ module timer(
         // counts down
     end
     `endif
-    
+
 endmodule
